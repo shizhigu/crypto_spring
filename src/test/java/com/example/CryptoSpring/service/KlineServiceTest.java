@@ -49,22 +49,22 @@ public class KlineServiceTest {
 
     @Test
     public void test_merge_klines() {
-//        List<BinanceKline> klineList = new ArrayList<>();
-//        assertEquals(0, service.mergeKLines(klineList, 5).size());
-//
-//        // divisible by commonly used timeframes; 120 minutes of data
-//        for (int i = 0; i < 120; i++) {
-//            klineList.add(mock(BinanceKline.class));
-//        }
-//        assertEquals(24, service.mergeKLines(klineList, 5).size());
-//        assertEquals(8, service.mergeKLines(klineList, 15).size());
-//        assertEquals(2, service.mergeKLines(klineList, 60).size());
-//
-//        // not divisible, 121 minutes
-//        klineList.add(mock(BinanceKline.class));
-//        assertEquals(25, service.mergeKLines(klineList, 5).size());
-//        assertEquals(9, service.mergeKLines(klineList, 15).size());
-//        assertEquals(3, service.mergeKLines(klineList, 60).size());
+        List<BinanceKline> klineList = new ArrayList<>();
+        assertEquals(0, service.mergeKLines(klineList, 5).size());
+
+        // divisible by commonly used timeframes; 120 minutes of data
+        for (int i = 0; i < 120; i++) {
+            klineList.add(mock(BinanceKline.class));
+        }
+        assertEquals(24, service.mergeKLines(klineList, 5).size());
+        assertEquals(8, service.mergeKLines(klineList, 15).size());
+        assertEquals(2, service.mergeKLines(klineList, 60).size());
+
+        // not divisible, 121 minutes
+        klineList.add(mock(BinanceKline.class));
+        assertEquals(25, service.mergeKLines(klineList, 5).size());
+        assertEquals(9, service.mergeKLines(klineList, 15).size());
+        assertEquals(3, service.mergeKLines(klineList, 60).size());
     }
 
 
