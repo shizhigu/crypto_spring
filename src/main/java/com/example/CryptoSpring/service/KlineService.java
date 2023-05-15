@@ -167,7 +167,7 @@ public class KlineService {
             kLine.setBaseAssetVolume(baseAssetVolume);
             kLine.setQuoteAssetVolume(quoteAssetVolume);
             kLine.setNumTrades(numTrades);
-            if (kLine.getEndTime()+1-kLine.getOpenTime() >= 30000) {
+            if (kLine.getEndTime()+1-kLine.getOpenTime() >= 1000*60*frequency) {
                 mergedKLines.add(kLine);
                 redisTemplate.opsForZSet().add(kLine.getSymbol()+'-'+frequency.toString(), kLine, kLine.getOpenTime());
             }
