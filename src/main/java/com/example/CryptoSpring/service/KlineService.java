@@ -49,12 +49,12 @@ public class KlineService {
     public List<BinanceKline> getKlinesFromTimeRange(String symbol, Long startTime, Long endTime, Integer frequency) {
         String key = symbol+'-'+frequency.toString();
         if (redisTemplate.hasKey(key)) {
-            Set<Object> klinesSet = redisTemplate.opsForZSet().rangeByScore(key, startTime, endTime);
+            Set<Object> klinesSet = redisTemplate.opsForZSet().rangeByScore(key, startTime, endTime-1);
             return klinesSet.stream()
                     .map(obj -> (BinanceKline) obj)
                     .collect(Collectors.toList());
         }
-        List<BinanceKline> kLinesList = repository.getSymbolKlineByTimeRange(symbol, startTime, endTime);
+        List<BinanceKline> kLinesList = repository.getSymbolKlineByTimeRange(symbol, startTime, endTime-1);
         List<BinanceKline> mergedKlinesList = this.mergeKLines(kLinesList, frequency);
         return mergedKlinesList;
 
