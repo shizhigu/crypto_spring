@@ -49,7 +49,7 @@ public class KlineService {
     public List<BinanceKline> getKlinesFromTimeRange(String symbol, Long startTime, Long endTime, Integer frequency) {
         String key = symbol+'-'+frequency.toString();
         if (redisTemplate.hasKey(key)) {
-            Set<Object> klinesSet = redisTemplate.opsForZSet().rangeByScore(key, startTime, endTime-1);
+            Set<Object> klinesSet = redisTemplate.opsForZSet().rangeByScore(key, startTime, endTime);
             return klinesSet.stream()
                     .map(obj -> (BinanceKline) obj)
                     .collect(Collectors.toList());
