@@ -25,7 +25,6 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Value("${spring.data.redis.port}")
     private int redisPort;
 
-
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         return new LettuceConnectionFactory(redisHost, redisPort);
