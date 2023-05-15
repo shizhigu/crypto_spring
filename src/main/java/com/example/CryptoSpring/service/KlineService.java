@@ -1,13 +1,8 @@
 package com.example.CryptoSpring.service;
 
-import com.example.CryptoSpring.configuration.RedisConfig;
 import com.example.CryptoSpring.model.BinanceKline;
 import com.example.CryptoSpring.repository.BinanceklineMyBatisRepository;
-import io.lettuce.core.RedisClient;
-import io.lettuce.core.api.StatefulRedisConnection;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.*;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class KlineService {
