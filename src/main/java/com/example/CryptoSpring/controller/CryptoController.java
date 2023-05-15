@@ -36,6 +36,11 @@ public class CryptoController {
         return binanceklineMyBatisRepository.findAll();
     }
 
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello world!";
+    }
+
     // @NotBlank, @NotNull, @Range(min=,max=, message=)
     @GetMapping("/findbytime")
     public List<BinanceKline> getSymbolKlineByTimeRange(@RequestParam(value = "symbol") @NotBlank String symbol,
