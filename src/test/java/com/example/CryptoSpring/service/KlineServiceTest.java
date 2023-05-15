@@ -7,6 +7,7 @@ import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
@@ -32,6 +33,9 @@ public class KlineServiceTest {
     @Autowired
     private BinanceklineMyBatisRepository repositorySpy;
 
+    @Autowired
+    private RedisTemplate<String, Object> redisSpy;
+
     @Value("${KlineApi}")
     private String url;
 
@@ -50,6 +54,8 @@ public class KlineServiceTest {
 
     @Test
     public void test_merge_klines() {
+        ReflectionTestUtils.setField(service, "redisTemplate", redisSpy);
+
         List<BinanceKline> klineList = new ArrayList<>();
         assertEquals(0, service.mergeKLines(klineList, 5).size());
 
@@ -92,14 +98,15 @@ public class KlineServiceTest {
     @Test
     public void test_get_klines_from_time_range() {
         ReflectionTestUtils.setField(service, "repository", repositorySpy);
+        ReflectionTestUtils.setField(service, "redisTemplate", redisSpy);
 
         // get 1-day data (1440 minutes) with commonly used frequencies
-//        assertEquals(288, service.getKlinesFromTimeRange("BTCUSD", 1664607600000L,
-//                1664694000000L, 5).size());
-//        assertEquals(96, service.getKlinesFromTimeRange("BTCUSD", 1664607600000L,
-//                1664694000000L, 15).size());
-//        assertEquals(24, service.getKlinesFromTimeRange("BTCUSD", 1664607600000L,
-//                1664694000000L, 60).size());
+        assertEquals(288, service.getKlinesFromTimeRange("BTCUSD", 1664607600000L,
+                1664694000000L, 5).size());
+        assertEquals(96, service.getKlinesFromTimeRange("BTCUSD", 1664607600000L,
+                1664694000000L, 15).size());
+        assertEquals(24, service.getKlinesFromTimeRange("BTCUSD", 1664607600000L,
+                1664694000000L, 60).size());
 
     }
 }
