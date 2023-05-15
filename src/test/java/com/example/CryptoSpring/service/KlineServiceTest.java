@@ -47,6 +47,7 @@ public class KlineServiceTest {
     }
 
 
+
     @Test
     public void test_merge_klines() {
         List<BinanceKline> klineList = new ArrayList<>();
