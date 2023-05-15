@@ -50,9 +50,11 @@ public class KlineService {
         String key = symbol+'-'+frequency.toString();
         if (redisTemplate.hasKey(key)) {
             Set<Object> klinesSet = redisTemplate.opsForZSet().rangeByScore(key, startTime, endTime-1);
-            return klinesSet.stream()
-                    .map(obj -> (BinanceKline) obj)
-                    .collect(Collectors.toList());
+            if (klinesSet.size() >= (endTime-startTime)/1000/60/frequency*0.95) {
+                return klinesSet.stream()
+                        .map(obj -> (BinanceKline) obj)
+                        .collect(Collectors.toList());
+            }
         }
         List<BinanceKline> kLinesList = repository.getSymbolKlineByTimeRange(symbol, startTime, endTime-1);
         List<BinanceKline> mergedKlinesList = this.mergeKLines(kLinesList, frequency);
