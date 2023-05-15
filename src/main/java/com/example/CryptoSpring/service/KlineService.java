@@ -44,48 +44,64 @@ public class KlineService {
         List<BinanceKline> mergedKlinesList = this.mergeKLines(kLinesList, frequency);
         return mergedKlinesList;
     }
+
+
     public List<BinanceKline> getKlinesFromTimeRange(String symbol, Long startTime, Long endTime, Integer frequency) {
-        List<BinanceKline> preMergedList = new ArrayList<>();
-        List<BinanceKline> mergedKlinesList;
-        List<BinanceKline> postMergedList;
         String key = symbol+'-'+frequency.toString();
-        Long currTime = startTime;
         if (redisTemplate.hasKey(key)) {
-            ZSetOperations.TypedTuple minScoreObj = redisTemplate.opsForZSet().popMin(key);
-            double minScr = minScoreObj.getScore();
-            Object minObj = minScoreObj.getValue();
-            Long minScore = (long) minScr;
-            redisTemplate.opsForZSet().add(key, minObj, minScore);
-            if (minScore > startTime+frequency*60*1000) {
-                preMergedList = writeIntoRedis(symbol, startTime, (Long) minScore-1, frequency);
-            }
-
-            Set<Object> klinesSet = redisTemplate.opsForZSet().
-                    rangeByScore(key, minScore, endTime-1);
-
-            mergedKlinesList = klinesSet.stream()
+            Set<Object> klinesSet = redisTemplate.opsForZSet().rangeByScore(key, startTime, endTime-1);
+            return klinesSet.stream()
                     .map(obj -> (BinanceKline) obj)
                     .collect(Collectors.toList());
-            currTime += frequency*60*1000*mergedKlinesList.size();
-
-//            mergedKlinesList = Stream.concat(preMergedList.stream(), mergedKlinesList.stream()).toList();
-            if (preMergedList.isEmpty()) {
-                preMergedList = mergedKlinesList;
-            } else {
-                preMergedList.addAll(mergedKlinesList);
-            }
-            if (klinesSet.size() >= (endTime-startTime)/1000/60/frequency) {
-                return preMergedList;
-            }
         }
-        postMergedList = writeIntoRedis(symbol, currTime, endTime-1, frequency);
-        // List<BinanceKline> entireMergedKlinesList = Stream.concat(mergedKlinesList.stream(), postMergedList.stream()).toList();
-        preMergedList.addAll(postMergedList);
+        List<BinanceKline> kLinesList = repository.getSymbolKlineByTimeRange(symbol, startTime, endTime);
+        List<BinanceKline> mergedKlinesList = this.mergeKLines(kLinesList, frequency);
+        return mergedKlinesList;
 
-        System.out.println(preMergedList.size());
 
-        return preMergedList;
     }
+//    public List<BinanceKline> getKlinesFromTimeRange(String symbol, Long startTime, Long endTime, Integer frequency) {
+//        List<BinanceKline> preMergedList = new ArrayList<>();
+//        List<BinanceKline> mergedKlinesList;
+//        List<BinanceKline> postMergedList;
+//        String key = symbol+'-'+frequency.toString();
+//        Long currTime = startTime;
+//        if (redisTemplate.hasKey(key)) {
+//            ZSetOperations.TypedTuple minScoreObj = redisTemplate.opsForZSet().popMin(key);
+//            double minScr = minScoreObj.getScore();
+//            Object minObj = minScoreObj.getValue();
+//            Long minScore = (long) minScr;
+//            redisTemplate.opsForZSet().add(key, minObj, minScore);
+//            if (minScore > startTime+frequency*60*1000) {
+//                preMergedList = writeIntoRedis(symbol, startTime, (Long) minScore-1, frequency);
+//            }
+//
+//            Set<Object> klinesSet = redisTemplate.opsForZSet().
+//                    rangeByScore(key, minScore, endTime-1);
+//
+//            mergedKlinesList = klinesSet.stream()
+//                    .map(obj -> (BinanceKline) obj)
+//                    .collect(Collectors.toList());
+//            currTime += frequency*60*1000*mergedKlinesList.size();
+//
+////            mergedKlinesList = Stream.concat(preMergedList.stream(), mergedKlinesList.stream()).toList();
+//            if (preMergedList.isEmpty()) {
+//                preMergedList = mergedKlinesList;
+//            } else {
+//                preMergedList.addAll(mergedKlinesList);
+//            }
+//            if (klinesSet.size() >= (endTime-startTime)/1000/60/frequency) {
+//                return preMergedList;
+//            }
+//        }
+//        postMergedList = writeIntoRedis(symbol, currTime, endTime-1, frequency);
+//        // List<BinanceKline> entireMergedKlinesList = Stream.concat(mergedKlinesList.stream(), postMergedList.stream()).toList();
+//        preMergedList.addAll(postMergedList);
+//
+//        System.out.println(preMergedList.size());
+//
+//        return preMergedList;
+//    }
 
 //    public List<BinanceKline> getKlinesFromTimeRange(String symbol, Long startTime, Long endTime, Integer frequency){
 //        List<BinanceKline> mergedKlinesList = new ArrayList<>();
@@ -151,8 +167,10 @@ public class KlineService {
             kLine.setBaseAssetVolume(baseAssetVolume);
             kLine.setQuoteAssetVolume(quoteAssetVolume);
             kLine.setNumTrades(numTrades);
-            mergedKLines.add(kLine);
-            redisTemplate.opsForZSet().add(kLine.getSymbol()+'-'+frequency.toString(), kLine, kLine.getOpenTime());
+            if (kLine.getEndTime()+1-kLine.getOpenTime() >= 30000) {
+                mergedKLines.add(kLine);
+                redisTemplate.opsForZSet().add(kLine.getSymbol()+'-'+frequency.toString(), kLine, kLine.getOpenTime());
+            }
             i += frequency;
         }
         return mergedKLines;
