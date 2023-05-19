@@ -6,7 +6,7 @@ import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
+//import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
@@ -32,8 +32,8 @@ public class KlineServiceTest {
     @Autowired
     private BinanceklineMyBatisRepository repositorySpy;
 
-    @Autowired
-    private RedisTemplate<String, Object> redisSpy;
+//    @Autowired
+//    private RedisTemplate<String, Object> redisSpy;
 
     @Value("${KlineApi}")
     private String url;
@@ -97,7 +97,7 @@ public class KlineServiceTest {
     @Test
     public void test_get_klines_from_time_range() {
         ReflectionTestUtils.setField(searchService, "repository", repositorySpy);
-        ReflectionTestUtils.setField(searchService, "redisTemplate", redisSpy);
+//        ReflectionTestUtils.setField(searchService, "redisTemplate", redisSpy);
 
         // get 1-day data (1440 minutes) with commonly used frequencies
         assertEquals(288, searchService.getKlinesFromTimeRange("BTCUSD", 1664607600000L,
