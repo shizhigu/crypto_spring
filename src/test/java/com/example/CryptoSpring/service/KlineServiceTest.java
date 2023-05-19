@@ -66,6 +66,7 @@ public class KlineServiceTest {
         for (int i = 0; i < 120; i++) {
             klineList.add(mock(BinanceKline.class));
         }
+//        System.out.println(klineList.size());
         assertEquals(24, searchService.mergeKLines(klineList, 5).size());
         assertEquals(8, searchService.mergeKLines(klineList, 15).size());
         assertEquals(2, searchService.mergeKLines(klineList, 60).size());

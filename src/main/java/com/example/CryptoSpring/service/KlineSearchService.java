@@ -37,14 +37,19 @@ public class KlineSearchService {
 
     public List<BinanceKline> mergeKLines(List<BinanceKline> klinesList, Integer frequency) {
         if (klinesList.size()==0) { return List.of(); }
-        return IntStream.range(0, klinesList.size()/frequency + 1)
+        List<BinanceKline> mergedKlines = IntStream.range(0, klinesList.size()/frequency+1)
                 .mapToObj(i -> klinesList.subList(i*frequency, Math.min(i*frequency + frequency, klinesList.size())))
                 //.parallel()
                 .map(this::merge)
                 .collect(Collectors.toList());
+        if (mergedKlines.get(mergedKlines.size()-1) == null) {
+            mergedKlines.remove(mergedKlines.size()-1);
+        }
+        return mergedKlines;
     }
 
     protected BinanceKline merge(List<BinanceKline> klinesList) {
+        if (klinesList.isEmpty()) {return null;}
         BinanceKline firstKline = klinesList.get(0);
         BinanceKline lastKline = klinesList.get(klinesList.size() - 1);
 
