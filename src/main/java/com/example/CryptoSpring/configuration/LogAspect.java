@@ -13,14 +13,6 @@ import java.util.Map;
 @Aspect
 @Component
 public class LogAspect {
-
-//    @Before("execution(public * com.example.crypto_spring.controller.CryptoController.*(..))")
-//    public void beforeMethod(JoinPoint point){
-//        System.out.println("in the before method AOP");
-//        System.out.println("method name: " + point.getSignature().getName() + " with arguments : " + Arrays.toString(point.getArgs()));
-//
-//    }
-
     /**
      * @After: Finally
      * @AfterReturning
