@@ -36,7 +36,7 @@ public class KlineSearchService {
     }
 
     public List<BinanceKline> mergeKLines(List<BinanceKline> klinesList, Integer frequency) {
-        if (klinesList.size()==0) { List.of(); }
+        if (klinesList.size()==0) { return List.of(); }
         return IntStream.range(0, klinesList.size()/frequency + 1)
                 .mapToObj(i -> klinesList.subList(i*frequency, Math.min(i*frequency + frequency, klinesList.size())))
                 //.parallel()
