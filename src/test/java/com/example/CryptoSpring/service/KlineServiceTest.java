@@ -1,5 +1,6 @@
 package com.example.CryptoSpring.service;
 
+import com.example.CryptoSpring.model.BinanceKline;
 import com.example.CryptoSpring.repository.BinanceklineMyBatisRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -10,6 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -51,27 +55,27 @@ public class KlineServiceTest {
 
 
 
-//    @Test
-//    public void test_merge_klines() {
-//        ReflectionTestUtils.setField(service, "redisTemplate", redisSpy);
-//
-//        List<BinanceKline> klineList = new ArrayList<>();
-//        assertEquals(0, service.mergeKLines(klineList, 5).size());
-//
-//        // divisible by commonly used timeframes; 120 minutes of data
-//        for (int i = 0; i < 120; i++) {
-//            klineList.add(mock(BinanceKline.class));
-//        }
-//        assertEquals(24, service.mergeKLines(klineList, 5).size());
-//        assertEquals(8, service.mergeKLines(klineList, 15).size());
-//        assertEquals(2, service.mergeKLines(klineList, 60).size());
-//
-//        // not divisible, 121 minutes
-//        klineList.add(mock(BinanceKline.class));
-//        assertEquals(25, service.mergeKLines(klineList, 5).size());
-//        assertEquals(9, service.mergeKLines(klineList, 15).size());
-//        assertEquals(3, service.mergeKLines(klineList, 60).size());
-//    }
+    @Test
+    public void test_merge_klines() {
+        ReflectionTestUtils.setField(searchService, "redisService", redisSpy);
+
+        List<BinanceKline> klineList = new ArrayList<>();
+        assertEquals(0, searchService.mergeKLines(klineList, 5).size());
+
+        // divisible by commonly used timeframes; 120 minutes of data
+        for (int i = 0; i < 120; i++) {
+            klineList.add(mock(BinanceKline.class));
+        }
+        assertEquals(24, searchService.mergeKLines(klineList, 5).size());
+        assertEquals(8, searchService.mergeKLines(klineList, 15).size());
+        assertEquals(2, searchService.mergeKLines(klineList, 60).size());
+
+        // not divisible, 121 minutes
+        klineList.add(mock(BinanceKline.class));
+        assertEquals(25, searchService.mergeKLines(klineList, 5).size());
+        assertEquals(9, searchService.mergeKLines(klineList, 15).size());
+        assertEquals(3, searchService.mergeKLines(klineList, 60).size());
+    }
 
 
     @Test
