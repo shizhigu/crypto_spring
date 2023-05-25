@@ -13,6 +13,10 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import com.example.CryptoSpring.service.KlineSearchService;
 
 @Service
 public class KlineLoadService {
@@ -26,7 +30,17 @@ public class KlineLoadService {
     @Value("${KlineApi}")
     private String url;
 
-    public List<BinanceKline> returnListOfKline(String[][] klinesBody, String symbol) {
+    @Value("${period}")
+    private int period;
+
+    protected String[][] getResponseBody(Long startTimeInclusive, Long endTimeExclusive, String symbol, int index) {
+        String apiUrl = String.format(url, symbol, startTimeInclusive + index * period,
+                Math.min(startTimeInclusive + index * period + period, endTimeExclusive-1));
+        ResponseEntity<String[][]> response = restTemplate.getForEntity(apiUrl, String[][].class);
+        return response.getBody();
+    }
+
+    protected List<BinanceKline> returnListOfKline(String[][] klinesBody, String symbol) {
         List<BinanceKline> klinesList = new ArrayList<>();
         for (String[] myParams : klinesBody) {
             Long openTime = Long.parseLong(myParams[0]);
@@ -48,18 +62,10 @@ public class KlineLoadService {
     public int insertKline(@RequestParam(value = "symbol") String symbol,
                            @RequestParam(value = "startTime") Long startTime,
                            @RequestParam(value = "endTime") Long endTime) {
-
-        int period = 1000 * 1000 * 60;
-        endTime--;
-        int num = 0;
-        while (startTime < endTime) {
-            String apiUrl = String.format(url, symbol, startTime, Math.min(startTime + period, endTime));
-            ResponseEntity<String[][]> response = restTemplate.getForEntity(apiUrl, String[][].class);
-            startTime += period;
-            List<BinanceKline> klineList = returnListOfKline(response.getBody(), symbol);
-            repository.insertBatch(klineList);
-            num += klineList.size();
-        }
-        return num;
+        return IntStream.range(0, (int) (endTime - startTime) / period)
+                .mapToObj(i -> returnListOfKline(getResponseBody(startTime, endTime, symbol, i), symbol))
+                .parallel()
+                .map(repository::insertBatch)
+                .mapToInt(Integer::intValue).sum();
     }
 }

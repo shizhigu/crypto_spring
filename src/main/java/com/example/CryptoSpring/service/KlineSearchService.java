@@ -39,7 +39,7 @@ public class KlineSearchService {
         if (klinesList.size()==0) { return List.of(); }
         List<BinanceKline> mergedKlines = IntStream.range(0, klinesList.size()/frequency+1)
                 .mapToObj(i -> klinesList.subList(i*frequency, Math.min(i*frequency + frequency, klinesList.size())))
-                //.parallel()
+                .parallel()
                 .map(this::merge)
                 .collect(Collectors.toList());
         if (mergedKlines.get(mergedKlines.size()-1) == null) {
