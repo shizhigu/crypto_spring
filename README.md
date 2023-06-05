@@ -19,7 +19,19 @@ The following guides illustrate how to use some features concretely:
 
 ### What is your project?
 
-This project is a backend system developed using Spring Boot and written in Java. It provides users with the ability to query and store historical Kline(candlestick) data for all cryptocurrencies available. The data is stored in an AWS RDS MySQL database. Users can request any cryptocurrency quote data through the project's API, and the backend can return data for custom timeframes to better fit users' needs. To enhance performance, commonly used timeframes are cached using AWS ElastiCache (Redis).
+This project is a backend system developed 
+using Spring Boot and written in Java. 
+It provides users with the ability to 
+query and store historical Kline (candlestick) data for all 
+cryptocurrencies available. The data is
+stored in an AWS RDS MySQL database. 
+Users can request any cryptocurrency 
+quote data through the project's API, 
+and the backend can return data for 
+custom timeframes to better fit users'
+needs. To enhance performance, commonly
+used timeframes are cached using 
+AWS ElastiCache (Redis).
 
 ### Prerequisites
 
