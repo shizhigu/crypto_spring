@@ -47,19 +47,19 @@ This project is a backend system developed using Spring Boot and written in Java
 
 5. Run image in a container
 
-   <pre>docker run {YOUR_LOCAL_PORT}:8888 crypto-spring:crypto </pre>
+   <pre>docker run -p {YOUR_LOCAL_PORT}:8888 crypto-spring:crypto </pre>
 
 
 ### How should I load data?
 
 To load Kline data into database, you can access the API endpoint by making a request to the following URL:
 
- <pre> http://localhost:8888/insertKline?symbol={symbol}&startTime={start}&endTime={end} </pre>
+ <pre> http://localhost:{YOUR_LOCAL_PORT}/insertKline?symbol={symbol}&startTime={start}&endTime={end} </pre>
 
 
 Here's a breakdown of the query parameters in the URL:
 
-<small>
+
 
 - symbol: The trading pair symbol (e.g., BTCUSD)
 
@@ -67,18 +67,17 @@ Here's a breakdown of the query parameters in the URL:
 
 - endTime: The end time of the desired data range in Unix timestamp format (e.g., 1675240518000)
 
-</small>
+
 
 ### How should I get data
 
 
 To get Kline data, you can access the API endpoint by making a request to the following URL:
 
- <pre> http://localhost:8888/findbytime?symbol={symbol}&startTime={startTime}&endTime={endTime}&frequency={frequency} </pre>
+ <pre> http://localhost:{YOUR_LOCAL_PORT}/findbytime?symbol={symbol}&startTime={startTime}&endTime={endTime}&frequency={frequency} </pre>
 
 Here's a breakdown of the query parameters in the URL:
 
-<small>
 
 - symbol: The trading pair symbol (e.g., BTCUSD)
 
@@ -87,6 +86,6 @@ Here's a breakdown of the query parameters in the URL:
 - endTime: The end time of the desired data range in Unix timestamp format (e.g., 1675240518000)
 
 - frequency: The time interval in minutes for each data point (e.g., 1440 for daily data)
-</small>
+
 
 ### UML(not class diagram, flow diagram)

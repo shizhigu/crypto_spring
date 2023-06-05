@@ -21,22 +21,4 @@ public class BinanceKline implements Serializable {
     private Long  numTrades;
     private Double quoteAssetVolume;
     private Double baseAssetVolume;
-
-//    public BinanceKline(String symbol, Long openTime, Long endTime, Double openPrice, Double highPrice, Double lowPrice, Double closePrice, Double volume, Long numTrades, Double quoteAssetVolume, Double baseAssetVolume) {
-//        this.symbol = symbol;
-//        this.openTime = openTime;
-//        this.endTime = endTime;
-//        this.openPrice = openPrice;
-//        this.highPrice = highPrice;
-//        this.lowPrice = lowPrice;
-//        this.closePrice = closePrice;
-//        this.volume = volume;
-//        this.numTrades = numTrades;
-//        this.quoteAssetVolume = quoteAssetVolume;
-//        this.baseAssetVolume = baseAssetVolume;
-//    }
-//
-//    public BinanceKline() {
-//
-//    }
 }
