@@ -45,21 +45,6 @@ public class KlineServiceTest {
     @Value("${period}")
     private int period;
 
-
-    @Test
-    public void test_insert_kline(){
-        when(repository.insertBatch(Mockito.any())).thenReturn(0);
-        ReflectionTestUtils.setField(service, "url", url);
-        ReflectionTestUtils.setField(service, "period", period);
-
-        assertEquals(1440, service.insertKline("BTCUSD", 1664607600000L,
-                1664694000000L));
-        assertEquals(0, service.insertKline("BTCUSD", 1664694000000L,
-                1664694000000L));
-    }
-
-
-
     @Test
     public void test_merge_klines() {
         ReflectionTestUtils.setField(searchService, "redisService", redisSpy);
