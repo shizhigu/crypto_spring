@@ -23,7 +23,6 @@ This project is a backend system developed using Spring Boot and written in Java
 
 ### Prerequisites
 
-- Java 11 or later
 - Docker
 
 ### How should I run it?
