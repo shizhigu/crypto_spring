@@ -32,7 +32,7 @@ This project is a backend system developed using Spring Boot and written in Java
 
     <pre>git clone https://github.com/shizhigu/crypto_spring.git </pre>
 
-2. Set up your MySQL and Redis instances and configure the database connection details in the ```application.properties``` file.
+2. Set up your MySQL and Redis instances and configure the database connection details in the ```src/main/resources/application.properties``` file.
    
 
 3. Navigate to the project directory:
