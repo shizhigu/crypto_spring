@@ -32,18 +32,20 @@ This project is a backend system developed using Spring Boot and written in Java
 
     <pre>git clone https://github.com/shizhigu/crypto_spring.git </pre>
 
+2. Set up your MySQL and Redis instances and configure the database connection details in the ```application.properties``` file.
+   
 
-2. Navigate to the project directory:
+3. Navigate to the project directory:
 
    <pre>cd crypto_spring </pre>
 
 
-3. Build Docker image
+4. Build Docker image
 
    <pre>docker build -t crypto-spring:crypto . </pre>
 
 
-4. Run image in a container
+5. Run image in a container
 
    <pre>docker run {YOUR_LOCAL_PORT}:8888 crypto-spring:crypto </pre>
 
@@ -54,15 +56,17 @@ To load Kline data into database, you can access the API endpoint by making a re
 
  <pre> http://localhost:8888/insertKline?symbol={symbol}&startTime={start}&endTime={end} </pre>
 
+
 Here's a breakdown of the query parameters in the URL:
 
+<small>
 - symbol: The trading pair symbol (e.g., BTCUSD)
 
 - startTime: The start time of the desired data range in Unix timestamp format (e.g., 1643704518000)
 
 - endTime: The end time of the desired data range in Unix timestamp format (e.g., 1675240518000)
 
-
+</small>
 
 ### How should I get data
 
@@ -73,6 +77,7 @@ To get Kline data, you can access the API endpoint by making a request to the fo
 
 Here's a breakdown of the query parameters in the URL:
 
+<small>
 - symbol: The trading pair symbol (e.g., BTCUSD)
 
 - startTime: The start time of the desired data range in Unix timestamp format (e.g., 1643704518000)
@@ -80,5 +85,6 @@ Here's a breakdown of the query parameters in the URL:
 - endTime: The end time of the desired data range in Unix timestamp format (e.g., 1675240518000)
 
 - frequency: The time interval in minutes for each data point (e.g., 1440 for daily data)
+</small>
 
 ### UML(not class diagram, flow diagram)
