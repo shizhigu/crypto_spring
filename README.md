@@ -30,22 +30,22 @@ This project is a backend system developed using Spring Boot and written in Java
 
 1. Clone the repository
 
-    <code>git clone https://github.com/shizhigu/crypto_spring.git </code>
+    <pre>git clone https://github.com/shizhigu/crypto_spring.git </pre>
 
 
 2. Navigate to the project directory:
 
-   <code> cd crypto_spring </code>
+   <pre>cd crypto_spring </pre>
 
 
 3. Build Docker image
 
-   <code> docker build -t crypto-spring:crypto . </code>
+   <pre>docker build -t crypto-spring:crypto . </pre>
 
 
 4. Run image in a container
 
-   <code> docker run {YOUR_LOCAL_PORT}:8888 crypto-spring:crypto </code>
+   <pre>docker run {YOUR_LOCAL_PORT}:8888 crypto-spring:crypto </pre>
 
 
 ### How should I load data?
