@@ -37,6 +37,13 @@ AWS ElastiCache (Redis).
 
 - Docker
 
+- MySQL server ([AWS RDS](https://aws.amazon.com/rds/) recommended)
+
+- Redis instance ([Amazon ElastiCache](https://aws.amazon.com/elasticache/) recommended)
+
+**Important**:  When using a cloud database service, it's crucial to ensure your server has the appropriate permissions and network access to establish connections with remote instances. Additionally, always adhere to your service provider's security best practices to safeguard your instances.
+
+
 ### How should I run it?
 
 1. Clone the repository
@@ -99,6 +106,6 @@ Here's a breakdown of the query parameters in the URL:
 - frequency: The time interval in minutes for each data point (e.g., 1440 for daily data)
 
 
-### UML(not class diagram, flow diagram)
+### UML (not class diagram, flow diagram)
 
 ![UML diagram](UML.jpg)
