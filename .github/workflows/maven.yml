@@ -29,6 +29,11 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+      env:
+        sql_url: ${{secrets.sql_url}}
+        sql_username: ${{secrets.sql_username}}
+        sql_password: ${{secrets.sql_password}}
+        redis_url: ${{secrets.redis_url}}
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
