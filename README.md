@@ -60,6 +60,7 @@ To load Kline data into database, you can access the API endpoint by making a re
 Here's a breakdown of the query parameters in the URL:
 
 <small>
+
 - symbol: The trading pair symbol (e.g., BTCUSD)
 
 - startTime: The start time of the desired data range in Unix timestamp format (e.g., 1643704518000)
@@ -78,6 +79,7 @@ To get Kline data, you can access the API endpoint by making a request to the fo
 Here's a breakdown of the query parameters in the URL:
 
 <small>
+
 - symbol: The trading pair symbol (e.g., BTCUSD)
 
 - startTime: The start time of the desired data range in Unix timestamp format (e.g., 1643704518000)
