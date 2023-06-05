@@ -60,12 +60,12 @@ AWS ElastiCache (Redis).
 
 4. Build Docker image
 
-   <pre>docker build -t crypto-spring:crypto . </pre>
+   <pre>docker build -t crypto-spring:latest . </pre>
 
 
 5. Run image in a container
 
-   <pre>docker run -p {YOUR_LOCAL_PORT}:8888 crypto-spring:crypto </pre>
+   <pre>docker run -p {YOUR_LOCAL_PORT}:8888 crypto-spring:latest </pre>
 
 
 ### How should I load data?
