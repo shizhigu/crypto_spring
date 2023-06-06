@@ -21,14 +21,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 11
+    - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+      env:
+        sql_url: ${{secrets.sql_url}}
+        sql_username: ${{secrets.sql_username}}
+        sql_password: ${{secrets.sql_password}}
+        redis_url: ${{secrets.redis_url}}
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
