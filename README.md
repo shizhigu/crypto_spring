@@ -60,7 +60,7 @@ AWS ElastiCache (Redis).
 
 4. Build Docker image
 
-   <pre>docker build -t crypto-spring:latest . </pre>
+   <pre> docker build -f src/main/resources/static/Dockerfile -t crypto-spring:latest . </pre>
 
 
 5. Run image in a container
